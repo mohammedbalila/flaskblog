@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<!-- Page container -->
+<section class="container" role="main">
+    <!-- Begining of the page layout -->
+    <section class="row">
+        <!-- Posts section here where all the posts rendered -->
+        <section class="col-sm-12 col-md-8 col-lg-8">
+            {% for post in posts %}
+            <!-- This section will have the post conent -->
+            <section class="card m-2">
+                <div class="card-body">
+                    <h3 class="card-title card-link">{{ post.title }}</h3>
+                    <p  class="card-text">
+                        {{ post.content }}
+                    </p>
+                </div>
+            </section>
+            {% endfor %}
+        </section>
+        <!-- The side section -->
+        <section class="col-sm-12 col-md-4 col-lg-4">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim sed voluptas, culpa
+            neque commodi rerum nostrum expedita dolores sit inventore alias molestias
+            excepturi a nesciunt sint ipsam natus impedit unde.
+        </section>
+    </section>
+    <!-- Page container closes here -->
+</section>
+{% endblock content %}

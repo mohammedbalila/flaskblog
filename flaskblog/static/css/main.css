@@ -1,0 +1,15 @@
+.header-nav {
+    background-color: purple;
+    color: black;
+}
+
+.nav-link , .navbar-brand{
+    color: white;
+}
+
+
+.nav-link:hover, .navbar-brand:hover {
+    background-color: rgba(150,0,140, .5);
+    opacity: 0.5;
+    color: white;
+}

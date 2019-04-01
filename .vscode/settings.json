@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.pythonPath": "/home/khattab/.virtualenvs/Flask/bin/python",
+    "python.linting.enabled": true,
+    "python.formatting.provider": "autopep8"
+}
