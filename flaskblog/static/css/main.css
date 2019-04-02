@@ -2,14 +2,32 @@
     background-color: purple;
     color: black;
 }
-
-.nav-link , .navbar-brand{
+.navbar-toggler-icon {
+    /* background-color: white; */
+    color: white;
+}
+.nav-link-header , .navbar-brand{
     color: white;
 }
 
 
-.nav-link:hover, .navbar-brand:hover {
+.nav-link-header:hover, .navbar-brand:hover {
     background-color: rgba(150,0,140, .5);
     opacity: 0.5;
     color: white;
+}
+
+.btn-outline-custom {
+    background-color: purple;
+}
+
+.btn-outline-custom:hover {
+    background-color: rgba(150,0,140, .5);
+    opacity: 0.5;
+    color: white;
+}
+
+.card {
+    width: 90%;
+    height: 50%;
 }

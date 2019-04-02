@@ -71,6 +71,22 @@
                 {% endif %}
             </div>
             <div class="form-group">
+                    {{ form.date_of_birth.label(class="form-control-label") }}
+                    {% if form.date_of_birth.errors %}
+                    {{ form.date_of_birth(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+
+                        {% for error in form.date_of_birth.errors %}
+                        {{ error }}
+                        {% endfor %}
+
+                    </div>
+                    {% else %}
+                    {{ form.date_of_birth(class="form-control form-control-lg datepicker", type="date") }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </fieldset>
