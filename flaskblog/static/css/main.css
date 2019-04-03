@@ -1,3 +1,6 @@
+body {
+  overflow-x: hidden;
+}
 .header-nav {
   color: black;
 }
@@ -20,6 +23,8 @@
 .nav-link-search {
   background-color: white;
   color: black;
+  width: 100%;
+  margin: 0;
 }
 
 .btn-outline-custom {
@@ -36,19 +41,15 @@
   width: 90%;
   height: 50%;
 }
-
+/* 
 #search {
   position: absolute;
   width: 100%;
   /* height: 100px; */
-  text-transform: capitalize;
-  top: 40px;
-}
+  /* text-transform: capitalize;
+  top: 40px; */
+/* } */ 
 
-#search option {
-  width: 100%;
-  margin-top: 20px;
-}
 textarea {
   resize: none;
 }

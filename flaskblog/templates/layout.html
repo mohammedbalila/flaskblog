@@ -30,24 +30,18 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search"
-                            onkeyup="searchUsers(this.value)">
-                        <div id="search"></div>
-                    </form>
-                </li>
                 {% if current_user.is_authenticated %}
                 <li class="dropdown">
                     <a href="javascript:void(0)" class="nav-link nav-link-header dropdown-toggle" data-toggle="dropdown"
                         role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a class="nav-link nav-link-header"
+                        <li class="dropdown-item"><a class="nav-link"
                                 href="{{ url_for('users.profile', user_id= current_user.id) }}">Profile</a></li>
-                        <li><a class="nav-link nav-link-header"
+                        <li class="dropdown-item"><a class="nav-link"
                                 href="{{ url_for('users.settings', user_id=current_user.id) }}">Settings</a></li>
-                        <li><a class="nav-link nav-link-header" href="{{ url_for('users.logout') }}">
+                        <div class="dropdown-divider"></div>
+                        <li class="dropdown-item"><a class="nav-link" href="{{ url_for('users.logout') }}">
                                 Logout - {{ current_user.username }}</a>
                         </li>
                     </ul>
@@ -62,6 +56,14 @@
                     </a>
                 </li>
                 {% endif %}
+                <li>
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search"
+                            onkeyup="searchUsers(this.value)">
+                        <ul class="list-group position-absolute p-6" id="search">
+                        </ul>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
@@ -98,19 +100,22 @@
     $('.dropdown-toggle').dropdown();
 
     function searchUsers(username) {
+        if (username.trim().length === 0) {
+            document.getElementById("search").innerHTML = '';
+            return;
+        }
         const xhr = new XMLHttpRequest();
-
+        console.log(username)
         xhr.onreadystatechange = () => {
             let html = '';
-            if (username === "") {
-                html = '';
-                return;
-            }
             const users = JSON.parse(xhr.responseText);
 
             for (const user of users) {
-                const url = `profile/${user.id}`
-                html += `<option><a class="nav-link nav-link-search" href="${url}">${user.username}</a></option>`
+                const url = `/profile/${user.id}`
+                html += `
+                <li class="list-group-item">
+                    <a class="nav-link nav-link-search" href="${url}">${user.username}</a>
+                </li>`
             }
             document.getElementById("search").innerHTML = html
 

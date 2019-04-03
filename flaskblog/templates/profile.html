@@ -10,8 +10,6 @@
                     <img src="{{ image_path }}" class="card-img-top" width="100" height="250">
                     <div class="card-body">
                         <h5 class="card-title">{{ user.username }}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
                     </div>
                     <div class="card-footer text-muted">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" aria-orientation="vertical">
@@ -36,16 +34,42 @@
                         <ul class="list-group mt-2 mb-3">
                             <li class="list-group-item">username: {{ user.username }}</li>
                             <li class="list-group-item">email: {{ user.email }}</li>
-                            <li class="list-group-item">Bio: {{ user.bio }}</li>
+                            <li class="list-group-item">Bio: {{ user.bio or '' }}</li>
                             <li class="list-group-item">Porta ac consectetur ac</li>
                             <li class="list-group-item">Vestibulum at eros</li>
                         </ul>
                     </div>
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        Posts
+
+                        {% if posts == [] %}
+                        <p> No posts yet.</p>
+                        {% else %}
+
+                        {% for post in posts %}
+                        <!-- This section will have the post conent -->
+                        <section class="card m-2">
+                            <div class="card-body">
+                                <h3 class="card-title card-link">
+                                    <a href="{{ url_for('posts.get_posts', post_id=post.id) }}"
+                                        class="card-link">{{ post.title }}</a>
+                                </h3>
+                                <p class="card-text">
+                                    {{ post.content }}
+                                </p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </section>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        Meh
+                        <div class="card card-body mt-2">
+                                Meh
+                        </div>
                     </div>
                 </div>
             </section>

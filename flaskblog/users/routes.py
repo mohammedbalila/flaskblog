@@ -1,5 +1,5 @@
 from flask import (
-    flash, redirect, render_template, request, 
+    flash, redirect, render_template, request,
     url_for, abort, jsonify, Blueprint)
 import json
 from flask_login import current_user, login_user, logout_user, login_required
@@ -53,19 +53,24 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('users.login'))
-# User.query.filter(User.username.like("%u%")).all() 
+# User.query.filter(User.username.like("%u%")).all()
+
 
 @users.route('/search_user', methods=['GET'])
 def search_user():
     username = request.args.get('username')
-    users = User.query.filter(User.username.like(f'%{username}%')).all() 
+    users = User.query.filter(User.username.like(f'%{username}%')).all()
     return json.dumps([u.toJSON() for u in users])
+
 
 @users.route('/profile/<int:user_id>', methods=['GET'])
 def profile(user_id):
     user = User.query.get(user_id)
-    image_path = url_for('static', filename=f'profile_images/{user.profile_image}')
-    return render_template('profile.html', title=user.username, user=user, image_path=image_path)
+    posts = Post.query.filter_by(user_id=user_id).all()
+    image_path = url_for(
+        'static', filename=f'profile_images/{user.profile_image}')
+    return render_template('profile.html', title=user.username,
+                           user=user, image_path=image_path, posts=posts)
 
 
 @users.route('/settings/<int:user_id>', methods=['GET', 'POST'])
