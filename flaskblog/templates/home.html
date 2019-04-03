@@ -2,19 +2,71 @@
 
 {% block content %}
 <!-- Page container -->
-<section class="container" role="main">
+<section class="container mt-5 mb-5" role="main">
     <!-- Begining of the page layout -->
     <section class="row">
         <!-- Posts section here where all the posts rendered -->
         <section class="col-sm-12 col-md-8 col-lg-8">
+            {% if current_user.is_authenticated %}
+            <section class="border-bottom">
+                <form action="/home" method="POST">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="from-group">
+                        <legend class="border-bottom mb-4">
+                            What's in your mind?
+                        </legend>
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %}
+                            {{ form.title(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+
+                                {% for error in form.title.errors %}
+                                {{ error }}
+                                {% endfor %}
+
+                            </div>
+                            {% else %}
+                            {{ form.title(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.content.label(class="form-control-label") }}
+                            {% if form.content.errors %}
+                            {{ form.content(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+
+                                {% for error in form.content.errors %}
+                                {{ error }}
+                                {% endfor %}
+
+                            </div>
+                            {% else %}
+                            {{ form.content(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-success btn-lg") }}
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+            {% endif %}
             {% for post in posts %}
             <!-- This section will have the post conent -->
             <section class="card m-2">
                 <div class="card-body">
-                    <h3 class="card-title card-link">{{ post.title }}</h3>
-                    <p  class="card-text">
+                    <h3 class="card-title card-link">
+                        <a href="{{ url_for('posts.get_posts', post_id=post.id) }}" class="card-link">{{ post.title }}</a>
+                    </h3>
+                    <p class="card-text">
                         {{ post.content }}
                     </p>
+                </div>
+                <div class="card-footer text-muted">
+                    <button class="btn btn-danger btn-sm">
+                        <i class="fas fa-heart"></i>
+                    </button>
                 </div>
             </section>
             {% endfor %}

@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg header-nav">
+    <nav class="navbar navbar-expand-lg header-nav bg-primary sticky-top">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,33 +25,39 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="active">
-                    <a class="nav-link nav-link-header" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link nav-link-header" href="{{ url_for('main.home') }}">Home <span
+                            class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form class="form-inline" action="/action_page.php">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search"
+                            onkeyup="searchUsers(this.value)">
+                        <div id="search"></div>
                     </form>
                 </li>
                 {% if current_user.is_authenticated %}
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="nav-link nav-link-header dropdown-toggle" data-toggle="dropdown" role="button"
-                        aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <a href="javascript:void(0)" class="nav-link nav-link-header dropdown-toggle" data-toggle="dropdown"
+                        role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('profile', user_id= current_user.id) }}">Profile</a></li>
-                        <li><a href="{{ url_for('settings', user_id=current_user.id) }}">Settings</a></li>
-                        <li><a href="{{ url_for('logout') }}">
+                        <li><a class="nav-link nav-link-header"
+                                href="{{ url_for('users.profile', user_id= current_user.id) }}">Profile</a></li>
+                        <li><a class="nav-link nav-link-header"
+                                href="{{ url_for('users.settings', user_id=current_user.id) }}">Settings</a></li>
+                        <li><a class="nav-link nav-link-header" href="{{ url_for('users.logout') }}">
                                 Logout - {{ current_user.username }}</a>
                         </li>
                     </ul>
                 </li>
                 {% else %}
                 <li>
-                    <a class="nav-link nav-link-header" href="{{ url_for('register') }}">Signup</a>
+                    <a class="nav-link nav-link-header" href="{{ url_for('users.register') }}">Signup</a>
                 </li>
                 <li>
-                    <a class="nav-link nav-link-header" href="{{ url_for('login') }}">
+                    <a class="nav-link nav-link-header" href="{{ url_for('users.login') }}">
                         Login
                     </a>
                 </li>
@@ -90,7 +96,28 @@
     crossorigin="anonymous"></script>
 <script>
     $('.dropdown-toggle').dropdown();
-    $('.datepicker').datepicker();
+
+    function searchUsers(username) {
+        const xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = () => {
+            let html = '';
+            if (username === "") {
+                html = '';
+                return;
+            }
+            const users = JSON.parse(xhr.responseText);
+
+            for (const user of users) {
+                const url = `profile/${user.id}`
+                html += `<option><a class="nav-link nav-link-search" href="${url}">${user.username}</a></option>`
+            }
+            document.getElementById("search").innerHTML = html
+
+        }
+        xhr.open("GET", "{{ url_for('users.search_user') }}?username=" + username, true);
+        xhr.send();
+    }
 </script>
 
 </html>

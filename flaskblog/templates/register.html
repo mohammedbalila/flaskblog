@@ -3,7 +3,7 @@
 {% block content %}
 
 <section class="container">
-    <form action="/register" method="POST">
+    <form action="{{ url_for('users.register') }}" method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="from-group">
             <legend class="border-bottom mb-4">
@@ -93,7 +93,7 @@
     </form>
     <section class="border-top pt-3">
         <small class="text-muted">
-            Already have an account? <a class="ml-2" href="{{ url_for('login')}}">Login</a>
+            Already have an account? <a class="ml-2" href="{{ url_for('users.login')}}">Login</a>
         </small>
     </section>
 </section>

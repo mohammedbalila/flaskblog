@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     BooleanField, PasswordField, StringField,
-    SubmitField, DateField)
+    SubmitField, DateField, TextAreaField
+)
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import (
     DataRequired, Email, EqualTo, Length, ValidationError)
@@ -75,8 +76,26 @@ class UpdateUserForm(FlaskForm):
                 'Email already taken please choose another one.')
 
 
-class PasswordResetForm(FlaskForm):
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Body', validators=[DataRequired()])
+    submit = SubmitField('Post')
+
+
+class RequestPasswordResetForm(FlaskForm):
 
     email = StringField('Email', validators=[DataRequired(), Email()])
 
     submit = SubmitField('Done')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if not user:
+            raise ValidationError(
+                'Account with this email doesn\'t exsist')
+
+
+class PasswordResetForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])

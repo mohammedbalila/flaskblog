@@ -1,33 +1,54 @@
 .header-nav {
-    background-color: purple;
-    color: black;
+  color: black;
 }
 .navbar-toggler-icon {
-    /* background-color: white; */
-    color: white;
+  /* background-color: white; */
+  color: white;
 }
-.nav-link-header , .navbar-brand{
-    color: white;
+.nav-link-header,
+.navbar-brand {
+  color: white;
 }
 
+.nav-link-header:hover,
+.navbar-brand:hover {
+  background-color: #007bff;
+  opacity: 0.5;
+  color: white;
+}
 
-.nav-link-header:hover, .navbar-brand:hover {
-    background-color: rgba(150,0,140, .5);
-    opacity: 0.5;
-    color: white;
+.nav-link-search {
+  background-color: white;
+  color: black;
 }
 
 .btn-outline-custom {
-    background-color: purple;
+  background-color: purple;
 }
 
 .btn-outline-custom:hover {
-    background-color: rgba(150,0,140, .5);
-    opacity: 0.5;
-    color: white;
+  background-color: rgba(150, 0, 140, 0.5);
+  opacity: 0.5;
+  color: white;
 }
 
 .card {
-    width: 90%;
-    height: 50%;
+  width: 90%;
+  height: 50%;
+}
+
+#search {
+  position: absolute;
+  width: 100%;
+  /* height: 100px; */
+  text-transform: capitalize;
+  top: 40px;
+}
+
+#search option {
+  width: 100%;
+  margin-top: 20px;
+}
+textarea {
+  resize: none;
 }
