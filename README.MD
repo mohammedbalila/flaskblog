@@ -1,6 +1,6 @@
-## **Flask blog app **
+## **Flask blog app**
 ***
-** Env setup **
+**Env setup**
 
 Create a virtalenv and then run:
 pip install requirements.txt
